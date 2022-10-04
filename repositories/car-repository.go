@@ -3,6 +3,7 @@ package repositories
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 
 	"github.com/Obdurat/Carshop-Go/database"
 	"github.com/Obdurat/Carshop-Go/database/models"
@@ -28,7 +29,6 @@ func GetAll(ctx context.Context) ([]models.Car, error) {
 
 func GetOne(id primitive.ObjectID, ctx context.Context) (interface{}, error) {
 	var car models.Car
-	car.Validate()
 	err := DB.FindOne(ctx, bson.M{"_id": id}).Decode(&car)
 	if err != nil {
 		return nil, err
@@ -39,6 +39,8 @@ func GetOne(id primitive.ObjectID, ctx context.Context) (interface{}, error) {
 func Create(ctx context.Context, body []byte) (interface{}, error) {
 	var car models.Car
 	json.Unmarshal(body, &car)
+	err := car.Validate()
+	if err != nil { fmt.Println(err) }
 	r, err := DB.InsertOne(ctx, car)
 	if err != nil {
 		return nil, err

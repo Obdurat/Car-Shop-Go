@@ -11,8 +11,6 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// Is probaly best to make Middleware for validations and send teh request foward allready with Unmarshal
-
 var ctx = context.Background()
 
 func CreateCar(res http.ResponseWriter, req *http.Request) {
