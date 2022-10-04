@@ -3,7 +3,6 @@ package repositories
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 
 	"github.com/Obdurat/Carshop-Go/database"
 	"github.com/Obdurat/Carshop-Go/database/models"
@@ -40,7 +39,7 @@ func Create(ctx context.Context, body []byte) (interface{}, error) {
 	var car models.Car
 	json.Unmarshal(body, &car)
 	err := car.Validate()
-	if err != nil { fmt.Println(err) }
+	if err != nil { return nil, err }
 	r, err := DB.InsertOne(ctx, car)
 	if err != nil {
 		return nil, err
